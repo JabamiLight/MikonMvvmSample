@@ -6,10 +6,6 @@ import com.example.yllds.mikonsample.mvvm.repository.entity.User
 import com.mikon.mvvmlibrary.integration.IRepositoryManager
 import com.mikon.mvvmlibrary.mvvm.AbsRepository
 import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.ObservableSource
-import io.reactivex.annotations.NonNull
-import io.reactivex.functions.Function
 import io.rx_cache2.DynamicKey
 import io.rx_cache2.EvictDynamicKey
 import javax.inject.Inject
@@ -46,21 +42,21 @@ class UserRepository @Inject constructor(repositoryManager: IRepositoryManager) 
     val USERS_PER_PAGE = 10
 
 
-    fun getUsers(lastIdQueried: Int, update: Boolean): Observable<List<User>> {
+    fun getUsers(lastIdQueried: Int, update: Boolean): Flowable<List<User>> {
         //使用rxcache缓存,上拉刷新则不读取缓存,加载更多读取缓存
         return Flowable.just(
             mRepositoryManager
                 .obtainRetrofitService(UserService::class.java)
                 .getUsers(lastIdQueried, USERS_PER_PAGE)
         )
-            .flatMap(object : Function<Observable<List<User>>, ObservableSource<List<User>>> {
-                @Throws(Exception::class)
-                override fun apply(@NonNull listObservable: Observable<List<User>>): ObservableSource<List<User>> {
-                    return mRepositoryManager.obtainCacheService(CommonCache::class.java)
-                        .getUsers(listObservable, DynamicKey(lastIdQueried), EvictDynamicKey(update))
-                        .map({ listReply -> listReply.getData() })
-                }
-            })
+            .flatMap {
+                mRepositoryManager.obtainCacheService(CommonCache::class.java)
+                    .getUsers(it, DynamicKey(lastIdQueried), EvictDynamicKey(update))
+                    .map {
+                        it.data
+                    }
+
+            }
 
     }
 

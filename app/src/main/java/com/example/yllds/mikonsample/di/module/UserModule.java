@@ -7,7 +7,6 @@ import com.example.yllds.mikonsample.mvvm.repository.UserRepository;
 import com.example.yllds.mikonsample.mvvm.repository.entity.User;
 import com.example.yllds.mikonsample.mvvm.viewmodel.UserViewModel;
 import com.example.yllds.mikonsample.ui.activity.UserActivity;
-import com.example.yllds.mikonsample.ui.adapter.UserAdapter;
 import com.mikon.mvvmlibrary.di.scope.ActivityScope;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import dagger.Module;
@@ -72,10 +71,5 @@ public class UserModule {
         return new GridLayoutManager(mainActivity, 2);
     }
 
-    @ActivityScope
-    @Provides
-    static RecyclerView.Adapter<?> provideUserAdapter(List<User> list) {
-        return new UserAdapter(list);
-    }
 
 }

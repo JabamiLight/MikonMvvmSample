@@ -96,7 +96,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
             if (e instanceof InflateException) throw e;
             e.printStackTrace();
         }
-        initData(savedInstanceState);
+        activityInit(savedInstanceState);
     }
 
     @Override

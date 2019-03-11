@@ -15,41 +15,49 @@
  */
 package com.example.yllds.mikonsample.ui.adapter;
 
-import android.support.annotation.NonNull;
-import android.view.View;
+import android.widget.ImageView;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.yllds.mikonsample.R;
 import com.example.yllds.mikonsample.mvvm.repository.entity.User;
-import com.example.yllds.mikonsample.ui.holder.UserItemHolder;
-import com.mikon.mvvmlibrary.base.BaseHolder;
-import com.mikon.mvvmlibrary.base.DefaultAdapter;
+import com.mikon.imageloader.glide.ImageConfigImpl;
+import com.mikon.mvvmlibrary.http.imageloader.ImageLoader;
 
+import javax.inject.Inject;
 import java.util.List;
 
 
 /**
  * ================================================
- * 展示 {@link DefaultAdapter} 的用法
  * <p>
- * Created by JessYan on 09/04/2016 12:57
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-public class UserAdapter extends DefaultAdapter<User> {
+public class UserAdapter extends BaseQuickAdapter<User, BaseViewHolder> {
 
-    public UserAdapter(List<User> infos) {
-        super(infos);
+    private final ImageLoader mImageLoader;
+
+    @Inject
+    public UserAdapter(List<User> infos, ImageLoader imageLoader) {
+        super(R.layout.recycle_list, infos);
+        this.mImageLoader = imageLoader;
     }
 
-    @NonNull
-    @Override
-    public BaseHolder<User> getHolder(@NonNull View v, int viewType) {
-        return new UserItemHolder(v);
-    }
 
     @Override
-    public int getLayoutId(int viewType) {
-        return R.layout.recycle_list;
+    protected void convert(BaseViewHolder helper, User data) {
+
+        helper.setText(R.id.tv_name, data.getLogin());
+        ImageView mAvatar = helper.getView(R.id.iv_avatar);
+        //itemView 的 Context 就是 Activity, Glide 会自动处理并和该 Activity 的生命周期绑定
+        mImageLoader.loadImage(helper.itemView.getContext(),
+                ImageConfigImpl
+                        .builder()
+                        .url(data.getAvatarUrl())
+                        .imageView(mAvatar)
+                        .build());
+
     }
 
 

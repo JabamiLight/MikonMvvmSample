@@ -21,7 +21,9 @@ import android.support.annotation.NonNull;
 import com.mikon.mvvmlibrary.base.delegate.AppDelegate;
 import com.mikon.mvvmlibrary.base.delegate.AppLifecycles;
 import com.mikon.mvvmlibrary.di.component.AppComponent;
+import com.mikon.mvvmlibrary.service.InitializeService;
 import com.mikon.mvvmlibrary.utils.Preconditions;
+import com.mikon.mvvmlibrary.utils.UsualTool;
 
 /**
  * ================================================
@@ -54,6 +56,7 @@ public class BaseApplication extends Application implements App {
         if (mAppDelegate == null)
             this.mAppDelegate = new AppDelegate(base);
         this.mAppDelegate.attachBaseContext(base);
+        UsualTool.init(base);
     }
 
     @Override
@@ -61,6 +64,7 @@ public class BaseApplication extends Application implements App {
         super.onCreate();
         if (mAppDelegate != null)
             this.mAppDelegate.onCreate(this);
+        InitializeService.start(this);
     }
 
     /**

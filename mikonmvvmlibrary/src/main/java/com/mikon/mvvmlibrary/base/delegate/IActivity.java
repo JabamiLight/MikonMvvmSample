@@ -81,7 +81,7 @@ public interface IActivity {
      *
      * @param savedInstanceState
      */
-    void initData(@Nullable Bundle savedInstanceState);
+    void activityInit(@Nullable Bundle savedInstanceState);
 
     /**
      * 这个 Activity 是否会使用 Fragment,框架会根据这个属性判断是否注册 {@link FragmentManager.FragmentLifecycleCallbacks}

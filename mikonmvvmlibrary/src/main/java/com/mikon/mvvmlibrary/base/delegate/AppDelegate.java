@@ -72,7 +72,6 @@ public class AppDelegate implements App, AppLifecycles {
 
         //用反射, 将 AndroidManifest.xml 中带有 ConfigModule 标签的 class 转成对象集合（List<ConfigModule>）
         this.mModules = new ManifestParser(context).parse();
-
         //遍历之前获得的集合, 执行每一个 ConfigModule 实现类的某些方法
         for (ConfigModule module : mModules) {
 

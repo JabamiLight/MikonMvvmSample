@@ -12,6 +12,8 @@ import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 
 import java.util.List;
 
+import static com.mikon.mvvmlibrary.event.LoadStateEvent.STATE_EMPTY;
+
 
 /**
  * @author：tqzhang on 18/7/26 16:15
@@ -50,15 +52,15 @@ public class AbsViewModel<T extends AbsRepository> extends AndroidViewModel {
         if (obj instanceof List) {
             List list = (List) obj;
             if (list.isEmpty() && shouldShowEmpty()) {
-                showPageState(LoadStateEvent.STATE_EMPTY);
+                showPageState(STATE_EMPTY);
             } else {
-                String className=list.get(0).getClass().getSimpleName();
-                String key=getClass().getSimpleName().concat(className).concat("list");
+                String className = list.get(0).getClass().getSimpleName();
+                String key = getClass().getSimpleName().concat(className).concat("list");
                 LiveBus.getDefault().postEvent(key, obj);
             }
         } else {
-            String className=obj.getClass().getSimpleName();
-            String key=getClass().getSimpleName().concat(className);
+            String className = obj.getClass().getSimpleName();
+            String key = getClass().getSimpleName().concat(className);
             LiveBus.getDefault().postEvent(key, obj);
         }
 

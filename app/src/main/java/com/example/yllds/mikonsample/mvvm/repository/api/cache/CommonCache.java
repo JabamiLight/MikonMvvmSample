@@ -16,7 +16,7 @@
 package com.example.yllds.mikonsample.mvvm.repository.api.cache;
 
 import com.example.yllds.mikonsample.mvvm.repository.entity.User;
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 import io.rx_cache2.DynamicKey;
 import io.rx_cache2.EvictProvider;
 import io.rx_cache2.LifeCache;
@@ -38,7 +38,7 @@ import java.util.concurrent.TimeUnit;
 public interface CommonCache {
 
     @LifeCache(duration = 2, timeUnit = TimeUnit.MINUTES)
-    Observable<Reply<List<User>>> getUsers(Observable<List<User>> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
+    Flowable<Reply<List<User>>> getUsers(Flowable<List<User>> users, DynamicKey idLastUserQueried, EvictProvider evictProvider);
 
 
 }

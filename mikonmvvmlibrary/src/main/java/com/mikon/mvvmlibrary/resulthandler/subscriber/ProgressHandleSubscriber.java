@@ -13,18 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.mikon.mvvmlibrary.resulthandler;
+package com.mikon.mvvmlibrary.resulthandler.subscriber;
 
 import android.net.ParseException;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
 import com.mikon.mvvmlibrary.integration.AppManager;
+import com.mikon.mvvmlibrary.resulthandler.exception.ApiException;
+import com.mikon.mvvmlibrary.resulthandler.exception.CodeException;
 import com.mikon.mvvmlibrary.resulthandler.handler.ProgressDialogHandler;
 import com.mikon.mvvmlibrary.resulthandler.listener.ProcessCallback;
 import com.mikon.mvvmlibrary.resulthandler.listener.ProgressCancelListener;
-import io.reactivex.Observer;
+import com.mikon.mvvmlibrary.utils.NetTool;
+import com.mikon.mvvmlibrary.utils.UsualTool;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.subscribers.DisposableSubscriber;
 import org.json.JSONException;
 import retrofit2.HttpException;
 import timber.log.Timber;
@@ -39,39 +42,59 @@ import java.net.UnknownHostException;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-public  class ProgressHandleSubscriber<T> implements Observer<T>, ProgressCancelListener {
+public class ProgressHandleSubscriber<T> extends DisposableSubscriber<T> implements ProgressCancelListener {
 
-    private  ProcessCallback<T> callback;
-    private Disposable disposable;
+    private ProcessCallback<T> callback;
     private boolean isUseCache = false;
-    private boolean isCancelAble=false;
+    private boolean isCancelAble = true;
+    private boolean showProgress = true;
     private ProgressDialogHandler mProgressDialogHandler;
 
-    public void setDisposable(Disposable disposable) {
-        this.disposable = disposable;
+
+    public ProgressHandleSubscriber(ProcessCallback<T> callback) {
+        this(false, false, callback);
     }
 
-    public void setUseCache(boolean useCache) {
-        isUseCache = useCache;
-    }
-
-    public void setCancelAble(boolean cancelAble) {
-        isCancelAble = cancelAble;
+    public ProgressHandleSubscriber(boolean isCancelAble, boolean showProgress, ProcessCallback<T> callback) {
+        this(false, isCancelAble, showProgress, callback);
     }
 
 
-    public ProgressHandleSubscriber() {
+    public ProgressHandleSubscriber(boolean isUseCache, boolean isCancelAble, boolean showProgress, ProcessCallback<T> callback) {
+        this.isUseCache = isUseCache;
+        this.isCancelAble = isCancelAble;
+        this.showProgress = showProgress;
+        this.callback = callback;
         init();
     }
 
     private void init() {
-        mProgressDialogHandler = new ProgressDialogHandler(AppManager.getAppManager().getTopActivity(), this, true);
+        mProgressDialogHandler = new ProgressDialogHandler(AppManager.getAppManager().getTopActivity(), this, isCancelAble);
     }
 
     @Override
-    public void onSubscribe(@NonNull Disposable d) {
-        this.disposable = d;
+    protected void onStart() {
+        super.onStart();
+        if (!isUseCache && !NetTool.isNetworkAvailable(UsualTool.getContext())) {
+            onError(new ApiException(null, CodeException.NETWORD_ERROR, "无网络连接，请检查网络是否正常"));
+            onComplete();
+        }
+        if (showProgress) {
+            showProgressDialog();
+        }
+    }
 
+    private void showProgressDialog() {
+        if (mProgressDialogHandler != null) {
+            mProgressDialogHandler.obtainMessage(ProgressDialogHandler.SHOW_PROGRESS_DIALOG).sendToTarget();
+        }
+    }
+
+    private void dismissProgressDialog() {
+        if (mProgressDialogHandler != null) {
+            mProgressDialogHandler.obtainMessage(ProgressDialogHandler.DISMISS_PROGRESS_DIALOG).sendToTarget();
+            mProgressDialogHandler = null;
+        }
     }
 
     @Override
@@ -82,12 +105,13 @@ public  class ProgressHandleSubscriber<T> implements Observer<T>, ProgressCancel
 
     @Override
     public void onComplete() {
-
+        dismissProgressDialog();
     }
 
 
     @Override
     public void onError(@NonNull Throwable t) {
+        dismissProgressDialog();
         t.printStackTrace();
         if (callback != null) {
             callback.onError(handleResponseError(t));
@@ -96,8 +120,8 @@ public  class ProgressHandleSubscriber<T> implements Observer<T>, ProgressCancel
 
     @Override
     public void onCancelProgress() {
-        if (disposable!=null&&!disposable.isDisposed()) {
-            disposable.dispose();
+        if (!isDisposed()) {
+            dispose();
         }
     }
 
@@ -108,6 +132,8 @@ public  class ProgressHandleSubscriber<T> implements Observer<T>, ProgressCancel
         String msg = "未知错误";
         if (t instanceof UnknownHostException) {
             msg = "网络不可用";
+        } else if (t instanceof ApiException) {
+            msg = t.getMessage();
         } else if (t instanceof SocketTimeoutException) {
             msg = "请求网络超时";
         } else if (t instanceof HttpException) {
@@ -136,36 +162,5 @@ public  class ProgressHandleSubscriber<T> implements Observer<T>, ProgressCancel
         return msg;
     }
 
-
-    public static class Builder<T>{
-        private boolean isUseCache ;
-        private boolean isCancelAble;
-        private  ProcessCallback<T> callback;
-
-        public Builder setUseCache(boolean useCache) {
-            isUseCache = useCache;
-            return this;
-        }
-
-        public Builder<T> setCancelAble(boolean cancelAble) {
-            isCancelAble = cancelAble;
-            return this;
-        }
-
-        public Builder<T> setCallback(ProcessCallback<T> callback) {
-            this.callback = callback;
-            return this;
-        }
-
-        public ProgressHandleSubscriber<T> build(ProcessCallback callback){
-            ProgressHandleSubscriber subscriber=new ProgressHandleSubscriber();
-            subscriber.isCancelAble=isCancelAble;
-            subscriber.isUseCache=isUseCache;
-            subscriber.callback=callback;
-            return  subscriber;
-        }
-
-
-    }
 }
 
