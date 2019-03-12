@@ -15,32 +15,23 @@ package com.example.yllds.mikonsample.di.module
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import com.example.yllds.mikonsample.ui.activity.UserActivity
-import com.example.yllds.mikonsample.ui.activity.UserFragmentActivity
-import com.mikon.mvvmlibrary.di.scope.ActivityScope
+import com.example.yllds.mikonsample.ui.fragment.UserFragment
+import com.mikon.mvvmlibrary.di.scope.FragmentScope
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 /**
  * description
-
+ *
  * @author Johnny Shieh (JohnnyShieh17@gmail.com)
  * *
  * @version 1.0
  */
-
-
 @Module
-abstract class ActivityBindModule {
+internal abstract class FragmentBindModule {
 
-    @ActivityScope
-    @ContributesAndroidInjector(modules = [UserModule::class])
-    abstract fun userActivityInjector(): UserActivity
-
-
-    @ActivityScope
-    @ContributesAndroidInjector(modules = [FragmentBindModule::class])
-    abstract fun supportFragmentActivityInjector(): UserFragmentActivity
+    @FragmentScope
+    @ContributesAndroidInjector(modules = [UserFragmentModule::class])
+    internal abstract fun androidFragmentInjector(): UserFragment
 
 }

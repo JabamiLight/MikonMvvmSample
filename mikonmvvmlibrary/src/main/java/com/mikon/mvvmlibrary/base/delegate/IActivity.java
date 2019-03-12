@@ -38,7 +38,7 @@ import com.mikon.mvvmlibrary.integration.cache.LruCache;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-public interface IActivity {
+public interface IActivity extends IState {
 
     /**
      * 提供在 {@link Activity} 生命周期内的缓存容器, 可向此 {@link Activity} 存取一些必要的数据
@@ -92,21 +92,6 @@ public interface IActivity {
      */
     boolean useFragment();
 
-    void showLoading();
-
-    void showErrorView(String msg);
-
-    void toastError(String msg);
-
-    void toastSuccess(String msg);
-
-    void showLoadingMore();
-
-    void showRefresh();
-
-    void showEmpty();
-
-    void showLoadingComplete();
 
 
 

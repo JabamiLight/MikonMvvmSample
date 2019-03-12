@@ -8,8 +8,8 @@ import com.mikon.mvvmlibrary.event.LiveBus;
 import com.mikon.mvvmlibrary.event.LoadStateEvent;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 
+import javax.inject.Inject;
 import java.util.List;
 
 import static com.mikon.mvvmlibrary.event.LoadStateEvent.STATE_EMPTY;
@@ -20,9 +20,9 @@ import static com.mikon.mvvmlibrary.event.LoadStateEvent.STATE_EMPTY;
  */
 public class AbsViewModel<T extends AbsRepository> extends AndroidViewModel {
 
-
+    @Inject
     public T mRepository;
-    public RxErrorHandler mErrorHandler;
+
     public MutableLiveData<LoadStateEvent> loadState = new MutableLiveData<>();
     private CompositeDisposable mCompositeDisposable;
 
@@ -30,19 +30,6 @@ public class AbsViewModel<T extends AbsRepository> extends AndroidViewModel {
         super(application);
     }
 
-    public AbsViewModel bindRepository(T mRepository) {
-        if (this.mRepository == null) {
-            this.mRepository = mRepository;
-        }
-        return this;
-    }
-
-    public AbsViewModel bindErrorHandler(RxErrorHandler errorHandler) {
-        if (this.mErrorHandler == null) {
-            this.mErrorHandler = errorHandler;
-        }
-        return this;
-    }
 
     public boolean shouldShowEmpty() {
         return false;
@@ -87,4 +74,11 @@ public class AbsViewModel<T extends AbsRepository> extends AndroidViewModel {
             mCompositeDisposable.clear();
         }
     }
+
+    @Override
+    public void onCleared() {
+        super.onCleared();
+        unDisposable();
+    }
+
 }

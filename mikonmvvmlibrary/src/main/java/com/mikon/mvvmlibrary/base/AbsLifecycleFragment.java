@@ -18,13 +18,12 @@ package com.mikon.mvvmlibrary.base;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelStore;
-import android.support.annotation.NonNull;
+import android.content.Context;
 import android.support.annotation.Nullable;
-import com.mikon.mvvmlibrary.di.component.AppComponent;
+import com.mikon.basiccomponent.toast.ToastUtils;
 import com.mikon.mvvmlibrary.event.LiveBus;
 import com.mikon.mvvmlibrary.mvvm.AbsViewModel;
 import com.mikon.mvvmlibrary.resulthandler.handler.StateObserver;
-import dagger.android.AndroidInjection;
 
 import javax.inject.Inject;
 import java.lang.reflect.InvocationTargetException;
@@ -32,7 +31,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbsLifecycleActivity<P extends AbsViewModel> extends BaseActivity {
+public abstract class AbsLifecycleFragment<P extends AbsViewModel> extends BaseFragment {
 
     @Inject
     @Nullable
@@ -40,9 +39,10 @@ public abstract class AbsLifecycleActivity<P extends AbsViewModel> extends BaseA
 
     private List<Object> eventKeys = new ArrayList<>();
 
+
     @Override
-    public void setupActivityComponent(@NonNull AppComponent appComponent) {
-        AndroidInjection.inject(this);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         if (mViewModel != null) {
             registerViewModel();
             registerStateObserver();
@@ -50,9 +50,6 @@ public abstract class AbsLifecycleActivity<P extends AbsViewModel> extends BaseA
         }
     }
 
-    /**
-     * 使用反射注入viewmodel store，在destory的时候自动取消
-     */
     private void registerViewModel() {
         try {
             ViewModelStore store = getViewModelStore();
@@ -67,6 +64,7 @@ public abstract class AbsLifecycleActivity<P extends AbsViewModel> extends BaseA
             e.printStackTrace();
         }
     }
+
 
     protected <T> MutableLiveData<T> registerObserver(Class<T> tClass) {
         String event = mViewModel.getClass().getSimpleName().concat(tClass.getSimpleName());
@@ -85,11 +83,52 @@ public abstract class AbsLifecycleActivity<P extends AbsViewModel> extends BaseA
         mViewModel.loadState.observe(this, new StateObserver(this));
     }
 
-
-    protected abstract void dataObserver();
+    @Override
+    public void toastError(String msg) {
+        ToastUtils.show(getContext(), msg, ToastUtils.ERROR_TYPE);
+    }
 
     @Override
-    protected void onDestroy() {
+    public void toastSuccess(String msg) {
+        ToastUtils.show(getContext(), msg, ToastUtils.SUCCESS_TYPE);
+    }
+
+    @Override
+    public void showErrorView(String msg) {
+
+    }
+
+    @Override
+    public void showLoadingMore() {
+
+    }
+
+    @Override
+    public void showRefresh() {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void showLoading() {
+    }
+
+    @Override
+    public void showLoadingComplete() {
+
+    }
+
+    protected void dataObserver() {
+
+    }
+
+
+    @Override
+    public void onDestroy() {
         super.onDestroy();
         if (eventKeys != null && eventKeys.size() > 0) {
             for (int i = 0; i < eventKeys.size(); i++) {

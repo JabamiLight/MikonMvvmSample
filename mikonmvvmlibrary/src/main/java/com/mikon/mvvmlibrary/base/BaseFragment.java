@@ -23,17 +23,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+import com.mikon.basiccomponent.toast.ToastUtils;
 import com.mikon.mvvmlibrary.base.delegate.IFragment;
 import com.mikon.mvvmlibrary.integration.cache.Cache;
 import com.mikon.mvvmlibrary.integration.cache.CacheType;
-import com.mikon.mvvmlibrary.integration.lifecycle.FragmentLifecycleable;
-import com.mikon.mvvmlibrary.mvp.IPresenter;
 import com.mikon.mvvmlibrary.utils.ArmsUtils;
 import com.trello.rxlifecycle2.android.FragmentEvent;
+import dagger.android.support.DaggerFragment;
 import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.Subject;
-
-import javax.inject.Inject;
 
 /**
  * ================================================
@@ -49,14 +48,11 @@ import javax.inject.Inject;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-public abstract class BaseFragment<P extends IPresenter> extends Fragment implements IFragment, FragmentLifecycleable {
-    protected final String TAG = this.getClass().getSimpleName();
+public abstract class BaseFragment extends DaggerFragment implements IFragment {
     private final BehaviorSubject<FragmentEvent> mLifecycleSubject = BehaviorSubject.create();
     private Cache<String, Object> mCache;
     protected Context mContext;
-    @Inject
-    @Nullable
-    protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
+    private Unbinder mUnbinder;
 
     @NonNull
     @Override
@@ -67,11 +63,6 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
         return mCache;
     }
 
-    @NonNull
-    @Override
-    public final Subject<FragmentEvent> provideLifecycleSubject() {
-        return mLifecycleSubject;
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -86,16 +77,27 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     }
 
     @Override
+    public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        ViewGroup mView = (ViewGroup) inflater.inflate(getLayoutId(), null);
+        //绑定到butterknife
+        mUnbinder = ButterKnife.bind(mView);
+        return mView;
+    }
+
+
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null) mPresenter.onDestroy();//释放资源
-        this.mPresenter = null;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mContext = null;
+        if (mUnbinder != null) {
+            mUnbinder.unbind();
+        }
     }
 
     /**
@@ -110,5 +112,52 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
     @Override
     public boolean useEventBus() {
         return true;
+    }
+
+
+    @Override
+    public void operator(@Nullable Object data) {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void showErrorView(String msg) {
+
+    }
+
+    @Override
+    public void toastError(String msg) {
+        ToastUtils.show(getContext(), msg, ToastUtils.ERROR_TYPE);
+    }
+
+    @Override
+    public void toastSuccess(String msg) {
+        ToastUtils.show(getContext(), msg, ToastUtils.SUCCESS_TYPE);
+    }
+
+
+    @Override
+    public void showLoadingMore() {
+
+    }
+
+    @Override
+    public void showRefresh() {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void showLoadingComplete() {
+
     }
 }

@@ -1,25 +1,30 @@
-package com.example.yllds.mikonsample.ui.activity
+package com.example.yllds.mikonsample.ui.fragment
 
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
+import com.example.yllds.mikonsample.R
 import com.example.yllds.mikonsample.mvvm.repository.entity.User
 import com.example.yllds.mikonsample.mvvm.viewmodel.UserViewModel
 import com.example.yllds.mikonsample.ui.adapter.UserAdapter
-import com.example.yllds.mikonsample.ui.fragment.UserFragment
 import com.example.yllds.mikonsample.ui.view.CustomLoadMoreView
-import com.mikon.mvvmlibrary.base.AbsLifecycleActivity
+import com.mikon.mvvmlibrary.base.AbsLifecycleFragment
 import com.mikon.mvvmlibrary.utils.ArmsUtils
 import com.mikon.mvvmlibrary.utils.PermissionUtil
 import com.tbruyelle.rxpermissions2.RxPermissions
 import kotlinx.android.synthetic.main.activity_user.*
 import me.jessyan.rxerrorhandler.core.RxErrorHandler
-import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
+/**
+ * Class:UserFragment
+ * Author: JabamiLight
+ * Description:
+ * Date:  2019/3/12
+ * 重庆锐云科技有限公司
 
-class UserActivity : AbsLifecycleActivity<UserViewModel>() {
-
+ */
+class UserFragment : AbsLifecycleFragment<UserViewModel>() {
 
     @Inject
     lateinit var mRxPermissions: RxPermissions
@@ -30,34 +35,30 @@ class UserActivity : AbsLifecycleActivity<UserViewModel>() {
     @Inject
     lateinit var mErrorHandler: RxErrorHandler
 
-
     private var pullToRefresh: Boolean = true
 
-
-    override fun initView(savedInstanceState: Bundle?): Int {
-        return com.example.yllds.mikonsample.R.layout.activity_user
+    override fun getLayoutId(): Int {
+        return R.layout.activity_user
     }
 
-
-    override fun activityInit(savedInstanceState: Bundle?) {
+    override fun initData(savedInstanceState: Bundle?) {
 
         swipeRefreshLayout.setOnRefreshListener {
             pullToRefresh = true
-            mViewModel?.requestUsers(pullToRefresh)
+            mViewModel?.requestUsers(true)
         }
 
         ArmsUtils.configRecyclerView(recyclerView, mLayoutManager)
         recyclerView.adapter = mAdapter
         mAdapter.setOnItemClickListener { adapter, view, position ->
-            startActivity<UserFragmentActivity>("fragment" to UserFragment::class.java.name)
         }
-        initPage()
         //请求外部存储权限用于适配android6.0的权限管理机制
         PermissionUtil.externalStorage(object : PermissionUtil.RequestPermission {
             override fun onRequestPermissionSuccess() {
                 //request permission success, do something.
                 pullToRefresh = true
                 mViewModel?.requestUsers(pullToRefresh)
+
             }
 
             override fun onRequestPermissionFailure(permissions: List<String>) {
@@ -69,7 +70,7 @@ class UserActivity : AbsLifecycleActivity<UserViewModel>() {
             }
         }, mRxPermissions, mErrorHandler)
 
-
+        initPage()
     }
 
     private fun initPage() {

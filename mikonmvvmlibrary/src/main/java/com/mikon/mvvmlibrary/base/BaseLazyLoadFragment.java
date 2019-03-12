@@ -2,14 +2,13 @@ package com.mikon.mvvmlibrary.base;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import com.mikon.mvvmlibrary.mvp.IPresenter;
 
 import java.util.List;
 
 /**
  * 子类覆写{@link BaseLazyLoadFragment}lazyLoadData可快速实现Fragment懒加载
  */
-public abstract class BaseLazyLoadFragment<P extends IPresenter> extends BaseFragment<P> {
+public abstract class BaseLazyLoadFragment extends BaseFragment {
 
     private boolean isViewCreated; // 界面是否已创建完成
     private boolean isVisibleToUser; // 是否对用户可见

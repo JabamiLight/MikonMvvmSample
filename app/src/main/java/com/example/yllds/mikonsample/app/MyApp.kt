@@ -1,4 +1,4 @@
-package com.example.yllds.mikonsample
+package com.example.yllds.mikonsample.app
 
 import android.app.Activity
 import com.example.yllds.mikonsample.di.component.DaggerAppManagerComponent

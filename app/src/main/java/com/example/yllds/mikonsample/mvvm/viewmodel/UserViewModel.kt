@@ -10,42 +10,22 @@ import com.mikon.mvvmlibrary.resulthandler.subscriber.ProgressHandleSubscriber
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import me.jessyan.rxerrorhandler.handler.RetryWithDelayOfFlowable
+import javax.inject.Inject
+
 
 /*
-* Created by TY on 2019/3/8.
-*      
-*
-*      
-*          ┌─┐       ┌─┐
-*       ┌──┘ ┴───────┘ ┴──┐
-*       │                 │
-*       │       ───       │
-*       │  ─┬┘       └┬─  │
-*       │                 │
-*       │       ─┴─       │
-*       │                 │
-*       └───┐         ┌───┘
-*           │         │
-*           │         │
-*           │         │
-*           │         └──────────────┐
-*           │                        │
-*           │                        ├─┐
-*           │                        ┌─┘    
-*           │                        │
-*           └─┐  ┐  ┌───────┬──┐  ┌──┘         
-*             │ ─┤ ─┤       │ ─┤ ─┤         
-*             └──┴──┘       └──┴──┘ 
-*                 神兽保佑 
-*                 代码无BUG! 
 */
-class UserViewModel(app: Application) : AbsViewModel<UserRepository>(app) {
+class UserViewModel @Inject constructor(app: Application) :
+    AbsViewModel<UserRepository>(app) {
+    private var lastUserId = 1
+    private var isFirst: Boolean = true
 
 
-    private var isFirst: Boolean = false
+    fun requestUsers(pullToRefresh: Boolean) {
+        if (pullToRefresh) lastUserId = 1//下拉刷新默认只请求第一页
 
-    fun requestUsers(lastUserId: Int, pullToRefresh: Boolean) {
         //关于RxCache缓存库的使用请参考 http://www.jianshu.com/p/b58ef6b0624b
+
         var isEvictCache = pullToRefresh//是否驱逐缓存,为ture即不使用缓存,每次下拉刷新即需要最新数据,则不使用缓存
 
         if (pullToRefresh && isFirst) {//默认在第一次下拉刷新时使用缓存
@@ -60,31 +40,33 @@ class UserViewModel(app: Application) : AbsViewModel<UserRepository>(app) {
                 .doOnSubscribe { _ ->
                     if (pullToRefresh)
                         showPageState(STATE_LOADING)
-                    else
-                        showPageState(STATE_LOADING)
                 }.subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doFinally {
-                    showPageState(STATE_LOADING_COMPLETE)
+                    if (pullToRefresh) {
+                        showPageState(STATE_LOADING_REFRESH_COMPLETE)
+                    } else {
+                        showPageState(STATE_LOADING_MORE_COMPLETE)
+                    }
                 }
                 .subscribeWith(ProgressHandleSubscriber(object : ProcessCallback<List<User>> {
                     override fun onError(msg: String?) {
-                        showPageState(STATE_ERROR, msg)
+                        if (pullToRefresh) {
+                            showPageState(STATE_LOADING_REFRESH_ERROR)
+                        } else {
+                            showPageState(STATE_LOADING_MORE_ERROR)
+                        }
                     }
 
-                    override fun onNext(result: List<User>?) {
-                        processData(result)
+                    override fun onNext(users: List<User>?) {
+                        lastUserId = users!!.get(users.size - 1).getId();//记录最后一个id,用于下一次请求
+                        processData(users)
                     }
                 }))
-
         )
 
 
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        unDisposable()
-    }
 
 }

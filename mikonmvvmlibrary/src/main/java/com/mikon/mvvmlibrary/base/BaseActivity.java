@@ -27,16 +27,15 @@ import android.view.InflateException;
 import android.view.View;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import com.mikon.basiccomponent.toast.ToastUtils;
 import com.mikon.mvvmlibrary.base.delegate.IActivity;
 import com.mikon.mvvmlibrary.di.component.AppComponent;
 import com.mikon.mvvmlibrary.integration.cache.Cache;
 import com.mikon.mvvmlibrary.integration.cache.CacheType;
-import com.mikon.mvvmlibrary.integration.lifecycle.ActivityLifecycleable;
 import com.mikon.mvvmlibrary.utils.ArmsUtils;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import dagger.android.AndroidInjection;
 import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.Subject;
 
 import static com.mikon.mvvmlibrary.utils.ThirdViewUtil.convertAutoView;
 
@@ -54,7 +53,7 @@ import static com.mikon.mvvmlibrary.utils.ThirdViewUtil.convertAutoView;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-public abstract class BaseActivity extends AppCompatActivity implements IActivity, ActivityLifecycleable {
+public abstract class BaseActivity extends AppCompatActivity implements IActivity {
     protected final String TAG = this.getClass().getSimpleName();
     private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
     private Cache<String, Object> mCache;
@@ -69,11 +68,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         return mCache;
     }
 
-    @NonNull
-    @Override
-    public final Subject<ActivityEvent> provideLifecycleSubject() {
-        return mLifecycleSubject;
-    }
 
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
@@ -135,5 +129,67 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
         AndroidInjection.inject(this);
+    }
+
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void showErrorView(String msg) {
+
+    }
+
+    @Override
+    public void toastError(String msg) {
+        ToastUtils.show(this, msg, ToastUtils.ERROR_TYPE);
+    }
+
+    @Override
+    public void toastSuccess(String msg) {
+        ToastUtils.show(this, msg, ToastUtils.SUCCESS_TYPE);
+    }
+
+
+    @Override
+    public void showLoadingMore() {
+
+    }
+
+    @Override
+    public void showRefresh() {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void showLoadingComplete() {
+
+    }
+
+    @Override
+    public void refreshComplete() {
+
+    }
+
+    @Override
+    public void refreshError() {
+
+    }
+
+    @Override
+    public void loadingMoreError() {
+
+    }
+
+    @Override
+    public void loadingMoreComplete() {
+
     }
 }

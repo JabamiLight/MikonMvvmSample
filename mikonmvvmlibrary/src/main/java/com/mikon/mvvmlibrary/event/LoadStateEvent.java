@@ -19,8 +19,12 @@ public class LoadStateEvent {
     public static final int STATE_EMPTY = 3;
     //上拉下拉加载状态码
     public static final int STATE_LOADING_MORE = 4;
-    public static final int STATE_LOADING_REFRESH = 5;
-    public static final int STATE_LOADING_COMPLETE = 6;
+    public static final int STATE_LOADING_MORE_COMPLETE = 5;
+    public static final int STATE_LOADING_MORE_ERROR = 6;
+    public static final int STATE_LOADING_REFRESH = 7;
+    public static final int STATE_LOADING_REFRESH_COMPLETE = 8;
+    public static final int STATE_LOADING_REFRESH_ERROR = 9;
+    public static final int STATE_LOADING_COMPLETE = 10;
 
 
     public LoadStateEvent(int state, String msg) {
@@ -32,7 +36,10 @@ public class LoadStateEvent {
     public int state;
     public String msg;
 
-    @IntDef({STATE_EMPTY, STATE_ERROR, STATE_LOADING, STATE_ERROR_VIEW, STATE_SUCCESS, STATE_LOADING_MORE, STATE_LOADING_REFRESH, STATE_LOADING_COMPLETE})
+    @IntDef({STATE_EMPTY, STATE_ERROR, STATE_LOADING, STATE_ERROR_VIEW, STATE_SUCCESS,
+            STATE_LOADING_MORE, STATE_LOADING_MORE_COMPLETE, STATE_LOADING_MORE_ERROR,
+            STATE_LOADING_REFRESH_COMPLETE, STATE_LOADING_REFRESH_ERROR, STATE_LOADING_REFRESH,
+            STATE_LOADING_COMPLETE})
     @Retention(RetentionPolicy.SOURCE)
     public @interface State {
     }

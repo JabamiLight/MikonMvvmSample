@@ -23,7 +23,6 @@ import android.view.View;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.mikon.mvvmlibrary.integration.EventBusManager;
-import com.mikon.mvvmlibrary.utils.ArmsUtils;
 import timber.log.Timber;
 
 /**
@@ -56,7 +55,7 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         if (iFragment.useEventBus())//如果要使用eventbus请将此方法返回true
             EventBusManager.getInstance().register(mFragment);//注册到事件主线
-        iFragment.setupFragmentComponent(ArmsUtils.obtainAppComponentFromContext(mFragment.getActivity()));
+//        iFragment.setupFragmentComponent(ArmsUtils.obtainAppComponentFromContext(mFragment.getActivity()));
     }
 
     @Override
