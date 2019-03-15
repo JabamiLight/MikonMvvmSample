@@ -17,10 +17,10 @@ package com.mikon.mvvmlibrary.integration;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import com.mikon.mvvmlibrary.base.delegate.FragmentDelegate;
 import com.mikon.mvvmlibrary.base.delegate.FragmentDelegateImpl;
 import com.mikon.mvvmlibrary.base.delegate.IFragment;

@@ -1,7 +1,8 @@
 package com.example.yllds.mikonsample.ui.activity
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import com.example.yllds.mikonsample.R
+import com.example.yllds.mikonsample.ui.fragment.UserFragment
 import com.mikon.mvvmlibrary.base.SupportFragmentActivity
 
 /**
@@ -15,28 +16,11 @@ class UserFragmentActivity : SupportFragmentActivity() {
 
 
     override fun initView(savedInstanceState: Bundle?): Int {
-        return 0
+        return R.layout.nav_activity
     }
 
     override fun activityInit(savedInstanceState: Bundle?) {
-        try {
-            val intent = intent
-            val fragmentClazz = intent
-                .getStringExtra("fragment")
-            var fragment: Fragment? = null
-            fragment = Class.forName(fragmentClazz)
-                .newInstance() as Fragment
-            fragment.arguments = intent.extras
-            supportFragmentManager.beginTransaction()
-                .add(android.R.id.content, fragment).commitAllowingStateLoss()
-
-        } catch (e: IllegalAccessException) {
-            e.printStackTrace()
-        } catch (e: InstantiationException) {
-            e.printStackTrace()
-        } catch (e: ClassNotFoundException) {
-            e.printStackTrace()
-        }
-
+        loadRootFragment(R.id.container,UserFragment())
     }
+
 }

@@ -17,9 +17,9 @@ package com.example.yllds.mikonsample.app;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import com.mikon.mvvmlibrary.integration.cache.IntelligentCache;
 import com.mikon.mvvmlibrary.utils.ArmsUtils;
 import com.squareup.leakcanary.RefWatcher;

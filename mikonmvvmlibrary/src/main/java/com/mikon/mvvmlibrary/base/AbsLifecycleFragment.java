@@ -15,11 +15,11 @@
  */
 package com.mikon.mvvmlibrary.base;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelStore;
 import android.content.Context;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelStore;
 import com.mikon.basiccomponent.toast.ToastUtils;
 import com.mikon.mvvmlibrary.event.LiveBus;
 import com.mikon.mvvmlibrary.mvvm.AbsViewModel;

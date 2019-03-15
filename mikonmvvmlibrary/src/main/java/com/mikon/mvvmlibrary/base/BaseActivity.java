@@ -18,13 +18,11 @@ package com.mikon.mvvmlibrary.base;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.view.InflateException;
 import android.view.View;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.mikon.basiccomponent.toast.ToastUtils;
@@ -36,6 +34,7 @@ import com.mikon.mvvmlibrary.utils.ArmsUtils;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import dagger.android.AndroidInjection;
 import io.reactivex.subjects.BehaviorSubject;
+import me.yokeyword.fragmentation.SupportActivity;
 
 import static com.mikon.mvvmlibrary.utils.ThirdViewUtil.convertAutoView;
 
@@ -53,7 +52,7 @@ import static com.mikon.mvvmlibrary.utils.ThirdViewUtil.convertAutoView;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-public abstract class BaseActivity extends AppCompatActivity implements IActivity {
+public abstract class BaseActivity extends SupportActivity implements IActivity {
     protected final String TAG = this.getClass().getSimpleName();
     private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
     private Cache<String, Object> mCache;
@@ -115,12 +114,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IActivit
         return true;
     }
 
-    /**
-     * 这个 {@link Activity} 是否会使用 {@link Fragment}, 框架会根据这个属性判断是否注册 {@link android.support.v4.app.FragmentManager.FragmentLifecycleCallbacks}
-     * 如果返回 {@code false}, 那意味着这个 {@link Activity} 不需要绑定 {@link Fragment}, 那你再在这个 {@link Activity} 中绑定继承于 {@link BaseFragment} 的 {@link Fragment} 将不起任何作用
-     *
-     * @return 返回 {@code true} (默认为 {@code true}), 则需要使用 {@link Fragment}
-     */
     @Override
     public boolean useFragment() {
         return true;

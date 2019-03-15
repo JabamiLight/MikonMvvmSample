@@ -15,8 +15,8 @@
  */
 package com.mikon.mvvmlibrary.http;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.mikon.mvvmlibrary.di.module.GlobalConfigModule;
 import okhttp3.Interceptor;
 import okhttp3.Request;

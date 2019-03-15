@@ -1,7 +1,7 @@
 package com.mikon.mvvmlibrary.resulthandler.handler;
 
-import android.arch.lifecycle.Observer;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import com.mikon.mvvmlibrary.base.delegate.IState;
 import com.mikon.mvvmlibrary.event.LoadStateEvent;
 

@@ -16,7 +16,7 @@
 package com.mikon.mvvmlibrary.utils;
 
 import android.Manifest;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;

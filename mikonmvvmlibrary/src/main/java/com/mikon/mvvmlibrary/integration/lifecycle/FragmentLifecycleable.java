@@ -15,7 +15,6 @@
  */
 package com.mikon.mvvmlibrary.integration.lifecycle;
 
-import android.support.v4.app.Fragment;
 import com.trello.rxlifecycle2.RxLifecycle;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 

@@ -17,7 +17,7 @@ package com.example.yllds.mikonsample.app;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import butterknife.ButterKnife;
 import com.example.yllds.mikonsample.BuildConfig;
 import com.mikon.mvvmlibrary.base.delegate.AppLifecycles;
@@ -25,6 +25,7 @@ import com.mikon.mvvmlibrary.integration.cache.IntelligentCache;
 import com.mikon.mvvmlibrary.utils.ArmsUtils;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+import me.yokeyword.fragmentation.Fragmentation;
 import timber.log.Timber;
 
 /**
@@ -64,6 +65,11 @@ public class AppLifecyclesImpl implements AppLifecycles {
 //                        }
 //                    });
             ButterKnife.setDebug(true);
+            //初始化Fragmentation
+            Fragmentation.builder()
+                    .stackViewMode(Fragmentation.BUBBLE)
+                    .debug(true)
+             .install();
         }
         //LeakCanary 内存泄露检查
         //使用 IntelligentCache.KEY_KEEP 作为 key 的前缀, 可以使储存的数据永久存储在内存中

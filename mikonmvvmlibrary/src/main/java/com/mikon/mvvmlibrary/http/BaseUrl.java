@@ -15,7 +15,7 @@
  */
 package com.mikon.mvvmlibrary.http;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import okhttp3.HttpUrl;
 
 /**

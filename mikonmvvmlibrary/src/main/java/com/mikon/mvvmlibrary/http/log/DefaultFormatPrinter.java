@@ -15,9 +15,9 @@
  */
 package com.mikon.mvvmlibrary.http.log;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.mikon.mvvmlibrary.di.module.GlobalConfigModule;
 import com.mikon.mvvmlibrary.utils.CharacterHandler;
 import com.mikon.mvvmlibrary.utils.LogUtils;

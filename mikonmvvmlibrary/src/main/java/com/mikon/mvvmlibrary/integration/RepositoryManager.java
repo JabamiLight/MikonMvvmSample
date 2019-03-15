@@ -17,14 +17,14 @@ package com.mikon.mvvmlibrary.integration;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.mikon.mvvmlibrary.integration.cache.Cache;
 import com.mikon.mvvmlibrary.integration.cache.CacheType;
 import com.mikon.mvvmlibrary.mvp.IModel;
 import com.mikon.mvvmlibrary.utils.Preconditions;
 import dagger.Lazy;
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.rx_cache2.internal.RxCache;
 import retrofit2.Retrofit;
@@ -95,14 +95,14 @@ public class RepositoryManager implements IRepositoryManager {
                             throws Throwable {
                         // 此处在调用 serviceClass 中的方法时触发
 
-                        if (method.getReturnType() == Observable.class) {
+                        if (method.getReturnType() == Flowable.class) {
                             // 如果方法返回值是 Observable 的话，则包一层再返回，
                             // 只包一层 defer 由外部去控制耗时方法以及网络请求所处线程，
                             // 如此对原项目的影响为 0，且更可控。
-                            return Observable.defer(() -> {
+                            return Flowable.defer(() -> {
                                 final T service = getRetrofitService(serviceClass);
                                 // 执行真正的 Retrofit 动态代理的方法
-                                return ((Observable) getRetrofitMethod(service, method)
+                                return ((Flowable) getRetrofitMethod(service, method)
                                         .invoke(service, args));
                             });
                         } else if (method.getReturnType() == Single.class) {

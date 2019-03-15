@@ -3,9 +3,9 @@ package com.mikon.basiccomponent.bottomnavigation;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.*;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import androidx.annotation.*;
+import androidx.core.content.ContextCompat;
 
 /**
  * Class description : Holds data for tabs (i.e data structure which holds all data to paint a tab)

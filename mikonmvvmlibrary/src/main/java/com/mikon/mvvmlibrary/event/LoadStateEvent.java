@@ -1,6 +1,6 @@
 package com.mikon.mvvmlibrary.event;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

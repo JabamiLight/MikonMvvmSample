@@ -10,10 +10,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
-import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
+import androidx.annotation.NonNull;
 
 //获得屏幕相关的辅助类
 public class ScreenUtils

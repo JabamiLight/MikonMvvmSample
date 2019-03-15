@@ -1,8 +1,10 @@
 package com.example.yllds.mikonsample.ui.fragment
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
+import android.util.Log
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.yllds.mikonsample.R
 import com.example.yllds.mikonsample.mvvm.repository.entity.User
 import com.example.yllds.mikonsample.mvvm.viewmodel.UserViewModel
@@ -47,10 +49,11 @@ class UserFragment : AbsLifecycleFragment<UserViewModel>() {
             pullToRefresh = true
             mViewModel?.requestUsers(true)
         }
-
-        ArmsUtils.configRecyclerView(recyclerView, mLayoutManager)
+        Log.w("tedu", ": "+hashCode());
+        ArmsUtils.configRecyclerView(recyclerView, GridLayoutManager(context, 2))
         recyclerView.adapter = mAdapter
         mAdapter.setOnItemClickListener { adapter, view, position ->
+            start(UserFragment())
         }
         //请求外部存储权限用于适配android6.0的权限管理机制
         PermissionUtil.externalStorage(object : PermissionUtil.RequestPermission {

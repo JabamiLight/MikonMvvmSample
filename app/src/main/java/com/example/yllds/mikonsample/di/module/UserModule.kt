@@ -1,7 +1,7 @@
 package com.example.yllds.mikonsample.di.module
 
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.yllds.mikonsample.mvvm.repository.entity.User
 import com.example.yllds.mikonsample.ui.activity.UserActivity
 import com.mikon.mvvmlibrary.di.scope.ActivityScope

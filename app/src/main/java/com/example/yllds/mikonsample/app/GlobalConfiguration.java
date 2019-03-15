@@ -17,8 +17,8 @@ package com.example.yllds.mikonsample.app;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import com.example.yllds.mikonsample.BuildConfig;
 import com.example.yllds.mikonsample.mvvm.repository.api.Api;
 import com.mikon.imageloader.glide.GlideImageLoaderStrategy;

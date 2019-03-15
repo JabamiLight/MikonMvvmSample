@@ -35,9 +35,11 @@ import javax.inject.Inject
  * ================================================
  */
 class UserAdapter @Inject
-constructor(infos: MutableList<User>, val mImageLoader: ImageLoader) :
+constructor(infos: MutableList<User>) :
     BaseQuickAdapter<User, BaseViewHolder>(R.layout.recycle_list, infos) {
 
+    @Inject
+    lateinit var mImageLoader: ImageLoader
 
     override fun convert(helper: BaseViewHolder, data: User) {
 

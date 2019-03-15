@@ -22,8 +22,7 @@ import android.content.ComponentCallbacks2;
 import android.content.ContentProvider;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
 import com.mikon.mvvmlibrary.base.App;
 import com.mikon.mvvmlibrary.base.BaseApplication;
 import com.mikon.mvvmlibrary.di.component.AppComponent;
@@ -114,7 +113,7 @@ public class AppDelegate implements App, AppLifecycles {
         mApplication.registerActivityLifecycleCallbacks(mActivityLifecycle);
 
         //注册框架内部已实现的 RxLifecycle 逻辑
-        mApplication.registerActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle);
+//        mApplication.registerActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle);
 
         //注册框架外部, 开发者扩展的 Activity 生命周期逻辑
         //每个 ConfigModule 的实现类可以声明多个 Activity 的生命周期回调

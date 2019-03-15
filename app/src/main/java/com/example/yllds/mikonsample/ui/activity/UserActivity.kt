@@ -1,8 +1,8 @@
 package com.example.yllds.mikonsample.ui.activity
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.example.yllds.mikonsample.mvvm.repository.entity.User
 import com.example.yllds.mikonsample.mvvm.viewmodel.UserViewModel
 import com.example.yllds.mikonsample.ui.adapter.UserAdapter
@@ -36,6 +36,10 @@ class UserActivity : AbsLifecycleActivity<UserViewModel>() {
 
     override fun initView(savedInstanceState: Bundle?): Int {
         return com.example.yllds.mikonsample.R.layout.activity_user
+    }
+
+    override fun useFragment(): Boolean {
+        return false
     }
 
 

@@ -5,35 +5,12 @@ package com.example.yllds.mikonsample.common
 *      
 *
 *      
-*          ┌─┐       ┌─┐
-*       ┌──┘ ┴───────┘ ┴──┐
-*       │                 │
-*       │       ───       │
-*       │  ─┬┘       └┬─  │
-*       │                 │
-*       │       ─┴─       │
-*       │                 │
-*       └───┐         ┌───┘
-*           │         │
-*           │         │
-*           │         │
-*           │         └──────────────┐
-*           │                        │
-*           │                        ├─┐
-*           │                        ┌─┘    
-*           │                        │
-*           └─┐  ┐  ┌───────┬──┐  ┌──┘         
-*             │ ─┤ ─┤       │ ─┤ ─┤         
-*             └──┴──┘       └──┴──┘ 
-*                 神兽保佑 
-*                 代码无BUG! 
 */
 
 class Constants{
 
     companion object {
         val EVENT_USER_STATE: Any = "EVENT_KEY_WORK_STATE"
-
 
     }
 }

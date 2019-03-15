@@ -16,7 +16,7 @@
 package com.mikon.mvvmlibrary.integration;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.mikon.mvvmlibrary.mvp.IModel;
 
 /**

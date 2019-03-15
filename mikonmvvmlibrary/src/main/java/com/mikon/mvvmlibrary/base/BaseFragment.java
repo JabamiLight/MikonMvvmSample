@@ -17,12 +17,12 @@ package com.mikon.mvvmlibrary.base;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.mikon.basiccomponent.toast.ToastUtils;
@@ -31,8 +31,14 @@ import com.mikon.mvvmlibrary.integration.cache.Cache;
 import com.mikon.mvvmlibrary.integration.cache.CacheType;
 import com.mikon.mvvmlibrary.utils.ArmsUtils;
 import com.trello.rxlifecycle2.android.FragmentEvent;
-import dagger.android.support.DaggerFragment;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.AndroidSupportInjection;
+import dagger.android.support.HasSupportFragmentInjector;
 import io.reactivex.subjects.BehaviorSubject;
+import me.yokeyword.fragmentation.SupportFragment;
+
+import javax.inject.Inject;
 
 /**
  * ================================================
@@ -48,11 +54,13 @@ import io.reactivex.subjects.BehaviorSubject;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-public abstract class BaseFragment extends DaggerFragment implements IFragment {
+public abstract class BaseFragment extends SupportFragment implements IFragment, HasSupportFragmentInjector {
     private final BehaviorSubject<FragmentEvent> mLifecycleSubject = BehaviorSubject.create();
     private Cache<String, Object> mCache;
     protected Context mContext;
     private Unbinder mUnbinder;
+
+
 
     @NonNull
     @Override
@@ -66,8 +74,9 @@ public abstract class BaseFragment extends DaggerFragment implements IFragment {
 
     @Override
     public void onAttach(Context context) {
-        super.onAttach(context);
         mContext = context;
+        AndroidSupportInjection.inject(this);
+        super.onAttach(context);
     }
 
     @Nullable
@@ -159,5 +168,13 @@ public abstract class BaseFragment extends DaggerFragment implements IFragment {
     @Override
     public void showLoadingComplete() {
 
+    }
+
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> childFragmentInjector;
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return childFragmentInjector;
     }
 }

@@ -18,7 +18,7 @@ package com.mikon.mvvmlibrary.base;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import com.mikon.mvvmlibrary.integration.EventBusManager;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;

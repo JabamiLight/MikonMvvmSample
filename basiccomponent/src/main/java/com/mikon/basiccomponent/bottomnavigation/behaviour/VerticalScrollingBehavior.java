@@ -2,10 +2,10 @@ package com.mikon.basiccomponent.bottomnavigation.behaviour;
 
 
 import android.content.Context;
-import android.support.annotation.IntDef;
-import android.support.design.widget.CoordinatorLayout;
 import android.util.AttributeSet;
 import android.view.View;
+import androidx.annotation.IntDef;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -16,8 +16,7 @@
 package com.mikon.mvvmlibrary.integration.lifecycle;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
 import com.trello.rxlifecycle2.RxLifecycle;
 import io.reactivex.subjects.Subject;
 

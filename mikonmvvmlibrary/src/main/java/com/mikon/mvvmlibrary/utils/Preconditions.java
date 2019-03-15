@@ -15,7 +15,7 @@
  */
 package com.mikon.mvvmlibrary.utils;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * ================================================

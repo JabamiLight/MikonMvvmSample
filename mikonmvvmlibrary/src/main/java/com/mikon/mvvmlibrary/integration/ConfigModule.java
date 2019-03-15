@@ -18,9 +18,8 @@ package com.mikon.mvvmlibrary.integration;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import com.mikon.mvvmlibrary.base.delegate.AppLifecycles;
 import com.mikon.mvvmlibrary.di.module.GlobalConfigModule;
 

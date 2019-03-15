@@ -15,7 +15,7 @@
  */
 package com.mikon.mvvmlibrary.base;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.mikon.mvvmlibrary.di.component.AppComponent;
 
 /**

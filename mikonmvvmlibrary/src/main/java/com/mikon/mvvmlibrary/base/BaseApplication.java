@@ -17,7 +17,7 @@ package com.mikon.mvvmlibrary.base;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.mikon.mvvmlibrary.base.delegate.AppDelegate;
 import com.mikon.mvvmlibrary.base.delegate.AppLifecycles;
 import com.mikon.mvvmlibrary.di.component.AppComponent;

@@ -18,7 +18,7 @@ package com.mikon.mvvmlibrary.integration.cache;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import com.mikon.mvvmlibrary.di.component.AppComponent;
 import com.mikon.mvvmlibrary.integration.RepositoryManager;
 

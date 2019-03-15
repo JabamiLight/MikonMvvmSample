@@ -15,8 +15,8 @@
  */
 package com.mikon.mvvmlibrary.http;
 
-import android.support.annotation.NonNull;
 import android.util.Log;
+import androidx.annotation.NonNull;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.HttpException;
@@ -43,7 +43,7 @@ public class OkHttpStreamFetcher implements DataFetcher<InputStream>, okhttp3.Ca
     private InputStream stream;
     private ResponseBody responseBody;
     private DataCallback<? super InputStream> callback;
-    // call may be accessed on the main thread while the object is in use on other threads. All other
+    // call may be accessed on the nav_activity thread while the object is in use on other threads. All other
     // accesses to variables may occur on different threads, but only one at a time.
     private volatile Call call;
 

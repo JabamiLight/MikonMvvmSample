@@ -1,6 +1,6 @@
 package com.mikon.mvvmlibrary.resulthandler.exception;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
