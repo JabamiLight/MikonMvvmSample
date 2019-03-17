@@ -1,9 +1,7 @@
 package com.example.yllds.mikonsample.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.yllds.mikonsample.R
 import com.example.yllds.mikonsample.mvvm.repository.entity.User
@@ -49,8 +47,7 @@ class UserFragment : AbsLifecycleFragment<UserViewModel>() {
             pullToRefresh = true
             mViewModel?.requestUsers(true)
         }
-        Log.w("tedu", ": "+hashCode());
-        ArmsUtils.configRecyclerView(recyclerView, GridLayoutManager(context, 2))
+        ArmsUtils.configRecyclerView(recyclerView,mLayoutManager)
         recyclerView.adapter = mAdapter
         mAdapter.setOnItemClickListener { adapter, view, position ->
             start(UserFragment())
@@ -87,16 +84,16 @@ class UserFragment : AbsLifecycleFragment<UserViewModel>() {
 
     override fun showLoading() {
         mAdapter.setEnableLoadMore(false)//这里的作用是防止下拉刷新的时候还可以上拉加载
-        swipeRefreshLayout.setRefreshing(true)
+        swipeRefreshLayout.isRefreshing = true
     }
 
     override fun refreshComplete() {
-        swipeRefreshLayout.setRefreshing(false)
+        swipeRefreshLayout.isRefreshing = false
         mAdapter.setEnableLoadMore(true)
     }
 
     override fun refreshError() {
-        swipeRefreshLayout.setRefreshing(false)
+        swipeRefreshLayout.isRefreshing = false
         mAdapter.setEnableLoadMore(true)
         toastError("加载失败")
     }

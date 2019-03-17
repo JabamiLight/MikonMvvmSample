@@ -130,16 +130,6 @@ public abstract class BaseFragment extends SupportFragment implements IFragment,
     }
 
     @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void showErrorView(String msg) {
-
-    }
-
-    @Override
     public void toastError(String msg) {
         ToastUtils.show(getContext(), msg, ToastUtils.ERROR_TYPE);
     }
@@ -150,25 +140,6 @@ public abstract class BaseFragment extends SupportFragment implements IFragment,
     }
 
 
-    @Override
-    public void showLoadingMore() {
-
-    }
-
-    @Override
-    public void showRefresh() {
-
-    }
-
-    @Override
-    public void showEmpty() {
-
-    }
-
-    @Override
-    public void showLoadingComplete() {
-
-    }
 
 
     @Inject

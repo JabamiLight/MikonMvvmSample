@@ -8,27 +8,51 @@ package com.mikon.mvvmlibrary.base.delegate;
  * 重庆锐云科技有限公司
  */
 public interface IState {
-    void toastError(String msg);
+    default void toastError(String msg){
 
-    void toastSuccess(String msg);
+    }
 
-    void showLoading();
+    default void toastSuccess(String msg){
 
-    void showErrorView(String msg);
+    }
 
-    void showLoadingMore();
+    default void showLoading(){
 
-    void showRefresh();
+    }
 
-    void refreshComplete();
+    default void showErrorView(String msg){
 
-    void refreshError();
+    }
 
-    void loadingMoreError();
+    default void showLoadingMore(){
 
-    void loadingMoreComplete();
+    }
 
-    void showEmpty();
+    default void showRefresh(){
 
-    void showLoadingComplete();
+    }
+
+    default void refreshComplete(){
+
+    }
+
+    default void refreshError(){
+
+    }
+
+    default void loadingMoreError(){
+
+    }
+
+    default void loadingMoreComplete(){
+
+    }
+
+    default void showEmpty(){
+
+    }
+
+    default void showLoadingComplete(){
+
+    }
 }

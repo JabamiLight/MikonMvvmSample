@@ -126,16 +126,6 @@ public abstract class BaseActivity extends SupportActivity implements IActivity 
 
 
     @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void showErrorView(String msg) {
-
-    }
-
-    @Override
     public void toastError(String msg) {
         ToastUtils.show(this, msg, ToastUtils.ERROR_TYPE);
     }
@@ -145,44 +135,4 @@ public abstract class BaseActivity extends SupportActivity implements IActivity 
         ToastUtils.show(this, msg, ToastUtils.SUCCESS_TYPE);
     }
 
-
-    @Override
-    public void showLoadingMore() {
-
-    }
-
-    @Override
-    public void showRefresh() {
-
-    }
-
-    @Override
-    public void showEmpty() {
-
-    }
-
-    @Override
-    public void showLoadingComplete() {
-
-    }
-
-    @Override
-    public void refreshComplete() {
-
-    }
-
-    @Override
-    public void refreshError() {
-
-    }
-
-    @Override
-    public void loadingMoreError() {
-
-    }
-
-    @Override
-    public void loadingMoreComplete() {
-
-    }
 }
